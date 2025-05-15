@@ -1,14 +1,11 @@
-from flask import Flask, request, redirect
+from flask import Flask, request
 
 app = Flask(__name__)
 
-@app.route('/strava/callback')
-def strava_callback():
+@app.route('/callback')
+def strava_redirect():
     code = request.args.get('code')
-    if not code:
-        return "❌ Code manquant", 400
-    return redirect(f"muscutracker://auth/callback?code={code}", code=302)
+    return f"<h1>Code reçu : {code}</h1>"
 
-@app.route('/')
-def home():
-    return "✅ Backend Strava en ligne"
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=10000)
